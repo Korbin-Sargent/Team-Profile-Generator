@@ -41,7 +41,7 @@ describe("Employee", () => {
     it("should throw an error if email is not a string", () => {
       const emp = () => new Employee("jerry", 50, "jerry");
       const err = new Error(
-        "expected parameter 'email' to be a non-empty string"
+        "expected parameter 'email' to be a non-empty string email address"
       );
       expect(emp).toThrowError(err);
     });
