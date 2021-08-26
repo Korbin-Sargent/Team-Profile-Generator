@@ -31,7 +31,7 @@ const questions = [
 
 const manangerQuestion = [
   {
-    type: "input",
+    type: "number",
     message: "What is the office number for this Manager?",
     name: "officeNumber",
   },
@@ -60,28 +60,37 @@ const finishQuestion = [
 ];
 
 const teamArray = [];
+let generatedHTML = "";
+let spec;
 
 function finishQuestionPrompt() {
   inquirer.prompt(finishQuestion).then((answer) => {
-    if (answer.choices === "No") {
-      //generate html function should go here
-      let generatedHTML = "";
+    console.log(teamArray);
+    if (answer.finishQuestion === "No") {
+      // generate html function should go here
       teamArray.map((result) => {
+        console.log(result.getRole());
+
+        if (result.getRole() === "Manager") {
+          spec = result.getOfficeNumber();
+        } else if (result.getRole() === "Engineer") {
+          spec = result.getGitHub();
+        } else {
+          spec = result.getSchool();
+        }
         generatedHTML += `
           <div class="card-body">
-            <h1 class="card-title">${result.name}</h1>
-            <h2 class="card-title">${result.}</h2>
+            <h1 class="card-title">${result.getName()}</h1>
+            <h2 class="card-title">${result.getRole()}</h2>
           </div>
-            <p class="card-text textStyling">Calories: ${result.recipe.calories.toFixed(
-          2
-        )}</p>
-      </div>
-        `
-
-
-
+            <p class="card-text textStyling">${result.getId()}</p>
+            <p class="card-text textStyling">${result.getEmail()}</p>
+            <p class="card-text textStyling">${spec}</p>
+        </div>
+        `;
+      });
+      console.log(generatedHTML);
     } else {
-
       addNewEmployee();
     }
   });
@@ -95,7 +104,6 @@ function addNewEmployee() {
       inquirer.prompt(manangerQuestion).then((managerData) => {
         console.log(managerData);
         const newManager = new Manager(
-          data.getRole(),
           data.name,
           Number(data.id),
           data.email,
