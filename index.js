@@ -3,6 +3,7 @@ const Manager = require("./lib/manager");
 const Intern = require("./lib/intern");
 const Engineer = require("./lib/engineer");
 const fs = require("fs");
+const { restoreDefaultPrompts } = require("inquirer");
 
 const questions = [
   {
@@ -64,7 +65,23 @@ function finishQuestionPrompt() {
   inquirer.prompt(finishQuestion).then((answer) => {
     if (answer.choices === "No") {
       //generate html function should go here
+      let generatedHTML = "";
+      teamArray.map((result) => {
+        generatedHTML += `
+          <div class="card-body">
+            <h1 class="card-title">${result.name}</h1>
+            <h2 class="card-title">${result.}</h2>
+          </div>
+            <p class="card-text textStyling">Calories: ${result.recipe.calories.toFixed(
+          2
+        )}</p>
+      </div>
+        `
+
+
+
     } else {
+
       addNewEmployee();
     }
   });
@@ -78,6 +95,7 @@ function addNewEmployee() {
       inquirer.prompt(manangerQuestion).then((managerData) => {
         console.log(managerData);
         const newManager = new Manager(
+          data.getRole(),
           data.name,
           Number(data.id),
           data.email,
