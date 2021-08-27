@@ -63,6 +63,8 @@ const teamArray = [];
 let generatedHTML = "";
 let spec;
 
+//asks final question "if user wants to add any more team members". If no, then html template string is created
+//and appended to the generated.html document
 function finishQuestionPrompt() {
   inquirer.prompt(finishQuestion).then((answer) => {
     console.log(teamArray);
@@ -107,9 +109,9 @@ function finishQuestionPrompt() {
     }
   });
 }
-
-//formats generated.html file
+//Begins line of questioning to to gather data and run that data through our constructor functions
 function addNewEmployee() {
+  //formats generated.html file. Writes over file is already existing
   setHtmlTemplate();
   //present the user with questions
   inquirer.prompt(questions).then((data) => {
@@ -161,7 +163,7 @@ function addNewEmployee() {
     }
   });
 }
-
+//starts prompt, begins entire process of making cards
 addNewEmployee();
 
 function theEnd() {
@@ -175,6 +177,7 @@ function theEnd() {
   );
 }
 
+//Sets html template for generated.html
 function setHtmlTemplate() {
   let firstWords = `
 <!DOCTYPE html>
@@ -205,7 +208,7 @@ function setHtmlTemplate() {
     </header>
     <section class="container">
     <div class="row">`
-fs.writedFile("./dist/generated.html", firstWords, (err) => 
-    err ? console.log(err) : console.log("success!")
+fs.writeFile("./dist/generated.html", firstWords, (err) => 
+    err ? console.log(err) : console.log()
   )
 }
