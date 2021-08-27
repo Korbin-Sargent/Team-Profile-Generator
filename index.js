@@ -3,7 +3,7 @@ const Manager = require("./lib/manager");
 const Intern = require("./lib/intern");
 const Engineer = require("./lib/engineer");
 const fs = require("fs");
-const { restoreDefaultPrompts } = require("inquirer");
+// const { restoreDefaultPrompts } = require("inquirer");
 
 const questions = [
   {
@@ -69,27 +69,39 @@ function finishQuestionPrompt() {
     if (answer.finishQuestion === "No") {
       // generate html function should go here
       teamArray.map((result) => {
-        console.log(result.getRole());
+        console.log(result);
 
         if (result.getRole() === "Manager") {
-          spec = result.getOfficeNumber();
+          spec = `Office Number: ${result.getOfficeNumber()}`;
         } else if (result.getRole() === "Engineer") {
-          spec = result.getGitHub();
+          spec = `GitHub: <a href="${result.getGitHub()}">${result.getGitHub()}</a>`;
         } else {
-          spec = result.getSchool();
+          spec = `School: ${result.getSchool()}`;
         }
         generatedHTML += `
-          <div class="card-body">
-            <h1 class="card-title">${result.getName()}</h1>
-            <h2 class="card-title">${result.getRole()}</h2>
+        <div class="col-sm-4">
+          <div class="card">
+            <div class="card-body">
+              <h5 class="card-title">${result.getName()}</h5>
+              <h6 class="card-subtitle mb-2 text-muted">${result.getRole()}</h6>
+              <p class="card-text">
+              <ul class="list-group list-group-flush">\n
+              <li class="list-group-item">ID: ${result.getId()}</li>\n
+              <li class="list-group-item">Email: 
+              <a href="mailto:${result.getEmail()}" target="NO_BLANK"
+                >${result.getEmail()}</a></li>\n
+              <li class="list-group-item">${spec}</li>
+              </p>
+            </div>
           </div>
-            <p class="card-text textStyling">${result.getId()}</p>
-            <p class="card-text textStyling">${result.getEmail()}</p>
-            <p class="card-text textStyling">${spec}</p>
-        </div>
+        </div> 
         `;
       });
       console.log(generatedHTML);
+      fs.appendFile("./dist/generated.html", generatedHTML, (err) =>
+        err ? console.log(err) : console.log("success!")
+      );
+      theEnd();
     } else {
       addNewEmployee();
     }
@@ -148,3 +160,14 @@ function addNewEmployee() {
 }
 
 addNewEmployee();
+
+function theEnd() {
+  const lastWords = `</div>
+    </section>
+    </main>
+    </body>
+  </html>`;
+  fs.appendFile("./dist/generated.html", lastWords, (err) =>
+    err ? console.log(err) : console.log("success!")
+  );
+}

@@ -1,0 +1,12 @@
+body {
+  background-color: lightgray;
+}
+
+.title {
+  color: white;
+  text-align: center;
+  font-size: 90px;
+  font-weight: 650;
+  background-color: rgb(80, 79, 79);
+  padding: 20px;
+}
