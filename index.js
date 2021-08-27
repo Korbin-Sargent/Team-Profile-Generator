@@ -114,7 +114,8 @@ function addNewEmployee() {
     console.log(data);
     if (data.role === "Manager") {
       inquirer.prompt(manangerQuestion).then((managerData) => {
-        console.log(managerData);
+        console.log(managerData)
+        //calls constructor function
         const newManager = new Manager(
           data.name,
           Number(data.id),
