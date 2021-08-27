@@ -88,7 +88,7 @@ function finishQuestionPrompt() {
               <ul class="list-group list-group-flush">\n
               <li class="list-group-item">ID: ${result.getId()}</li>\n
               <li class="list-group-item">Email: 
-              <a href="mailto:${result.getEmail()}" target="NO_BLANK"
+              <a href="mailto: ${result.getEmail()}" target="NO_BLANK"
                 >${result.getEmail()}</a></li>\n
               <li class="list-group-item">${spec}</li>
               </p>
