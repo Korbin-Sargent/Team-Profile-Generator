@@ -74,10 +74,13 @@ function finishQuestionPrompt() {
         console.log(result);
 
         if (result.getRole() === "Manager") {
+          setHtmlTemplate();
           spec = `Office Number: ${result.getOfficeNumber()}`;
         } else if (result.getRole() === "Engineer") {
+          setHtmlTemplate();
           spec = `GitHub: <a href="${result.getGitHub()}">${result.getGitHub()}</a>`;
         } else {
+          setHtmlTemplate();
           spec = `School: ${result.getSchool()}`;
         }
         generatedHTML += `
@@ -98,6 +101,7 @@ function finishQuestionPrompt() {
           </div>
         </div> 
         `;
+      
       });
       console.log(generatedHTML);
       fs.appendFile("./dist/generated.html", generatedHTML, (err) =>
@@ -112,10 +116,11 @@ function finishQuestionPrompt() {
 //Begins line of questioning to to gather data and run that data through our constructor functions
 function addNewEmployee() {
   //formats generated.html file. Writes over file is already existing
-  setHtmlTemplate();
+
   //present the user with questions
   inquirer.prompt(questions).then((data) => {
-    console.log(data);
+    // console.log(data);
+    // setHtmlTemplate();
     if (data.role === "Manager") {
       inquirer.prompt(manangerQuestion).then((managerData) => {
         console.log(managerData)
@@ -164,7 +169,8 @@ function addNewEmployee() {
   });
 }
 //starts prompt, begins entire process of making cards
-addNewEmployee();
+
+
 
 function theEnd() {
   const lastWords = `</div>
@@ -173,7 +179,7 @@ function theEnd() {
     </body>
   </html>`;
   fs.appendFile("./dist/generated.html", lastWords, (err) =>
-    err ? console.log(err) : console.log("success!")
+    err ? console.log(err) : console.log("theEnd function working!")
   );
 }
 
@@ -212,3 +218,6 @@ fs.writeFile("./dist/generated.html", firstWords, (err) =>
     err ? console.log(err) : console.log()
   )
 }
+
+
+addNewEmployee();
