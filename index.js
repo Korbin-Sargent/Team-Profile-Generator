@@ -67,20 +67,21 @@ let spec;
 //and appended to the generated.html document
 function finishQuestionPrompt() {
   inquirer.prompt(finishQuestion).then((answer) => {
-    console.log(teamArray);
+    // console.log(teamArray);
     if (answer.finishQuestion === "No") {
+      setHtmlTemplate();
       // generate html function should go here
       teamArray.map((result) => {
         console.log(result);
 
         if (result.getRole() === "Manager") {
-          setHtmlTemplate();
+          // setHtmlTemplate();
           spec = `Office Number: ${result.getOfficeNumber()}`;
         } else if (result.getRole() === "Engineer") {
-          setHtmlTemplate();
+          // setHtmlTemplate();
           spec = `GitHub: <a href="${result.getGitHub()}">${result.getGitHub()}</a>`;
         } else {
-          setHtmlTemplate();
+          // setHtmlTemplate();
           spec = `School: ${result.getSchool()}`;
         }
         generatedHTML += `
@@ -119,8 +120,6 @@ function addNewEmployee() {
 
   //present the user with questions
   inquirer.prompt(questions).then((data) => {
-    // console.log(data);
-    // setHtmlTemplate();
     if (data.role === "Manager") {
       inquirer.prompt(manangerQuestion).then((managerData) => {
         console.log(managerData)
@@ -168,56 +167,56 @@ function addNewEmployee() {
     }
   });
 }
-//starts prompt, begins entire process of making cards
 
 
 
 function theEnd() {
   const lastWords = `</div>
-    </section>
-    </main>
-    </body>
+  </section>
+  </main>
+  </body>
   </html>`;
   fs.appendFile("./dist/generated.html", lastWords, (err) =>
-    err ? console.log(err) : console.log("theEnd function working!")
+  err ? console.log(err) : console.log("theEnd function working!")
   );
 }
 
 //Sets html template for generated.html
 function setHtmlTemplate() {
   let firstWords = `
-<!DOCTYPE html>
-<html lang="en">
+  <!DOCTYPE html>
+  <html lang="en">
   <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Team Generator</title>
-    <link
-      href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css"
-      rel="stylesheet"
-      integrity="sha384-KyZXEAg3QhqLMpG8r+8fhAXLRk2vvoC2f3B09zVXn8CA5QIVfZOJ3BCsw2P0p/We"
-      crossorigin="anonymous"
-    />
-    <link rel="stylesheet" href="style.css" />
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Team Generator</title>
+  <link
+  href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css"
+  rel="stylesheet"
+  integrity="sha384-KyZXEAg3QhqLMpG8r+8fhAXLRk2vvoC2f3B09zVXn8CA5QIVfZOJ3BCsw2P0p/We"
+  crossorigin="anonymous"
+  />
+  <link rel="stylesheet" href="style.css" />
   </head>
   <body>
   <main>
-    <header>
-    <div class="container">
-      <nav class="navbar navbar-dark bg-dark">
-        <div class="container-fluid">
-          <span class="navbar-brand mb-0 h1">Team Profile Cards</span>
-        </div>
-      </nav>
-    </div>
-    </header>
-    <section class="container">
-    <div class="row">`
-fs.writeFile("./dist/generated.html", firstWords, (err) => 
-    err ? console.log(err) : console.log()
+  <header>
+  <div class="container">
+  <nav class="navbar navbar-dark bg-dark">
+  <div class="container-fluid">
+  <span class="navbar-brand mb-0 h1">Team Profile Cards</span>
+  </div>
+  </nav>
+  </div>
+  </header>
+  <section class="container">
+  <div class="row">`
+  fs.writeFile("./dist/generated.html", firstWords, (err) => 
+  err ? console.log(err) : console.log()
   )
 }
 
 
+//starts prompt, begins entire process of making cards
 addNewEmployee();
